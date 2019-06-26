@@ -1,5 +1,8 @@
-build:
+build: test
 	go build ggvc.go
+
+test:
+	go test .
 
 package: build
 	tar --exclude='./.git' --exclude='./Makefile' --exclude='./README.md' \

@@ -24,8 +24,11 @@ func Commands() {
       Aliases: []string{"v", "--version"},
       Usage:   "Calculate semantic version",
       Action: func(c *cli.Context) {
-        version := CalculateSemanticVersion()
-        fmt.Printf("%s", version)
+        branch, _ := ResolveGitBranch()
+        version, _ := ResolveGradleVersion()
+
+        semanticVersion := CalculateSemanticVersion(branch, version)
+        fmt.Printf("%s", semanticVersion)
       },
     },
   }
@@ -41,14 +44,11 @@ func Commands() {
 // release/1.x    1.0.0             1.0.0-rc{BUILD}
 // hotfix/1.x     1.0.0             1.0.0-rc{BUILD}
 // master         1.0.0             1.0.0
-func CalculateSemanticVersion() (string) {
-  var branch, version, versionRoot, versionExt, semanticVersion string
+func CalculateSemanticVersion(branch, version string) (string) {
+  var versionRoot, versionExt, semanticVersion string
 
-  branch, _ = ResolveGitBranch()
-  version, _ = ResolveGradleVersion()
-
-  // convert brenches like feature/xyz to feature-xyz
-  branch = strings.Replace(branch, "/", "-", -1)
+  // convert brenches like feature/XYZ to feature-xyz
+  branch = strings.ToLower(strings.Replace(branch, "/", "-", -1))
 
   if strings.Contains(version, "-") {
     versionRoot = strings.TrimSpace(strings.Split(version, "-")[0])
@@ -59,9 +59,9 @@ func CalculateSemanticVersion() (string) {
   }
 
   // Calculate semantic version
-  if branch == "develop" {
+  if branch == "develop" || branch == "master" {
     semanticVersion = versionRoot
-  } else if strings.HasPrefix(branch, "release/") || strings.HasPrefix(branch, "hotfix/") {
+  } else if strings.HasPrefix(branch, "release") || strings.HasPrefix(branch, "hotfix") {
     buildNumber := GetEnvVariable("BUILD_NUMBER", "0")
     semanticVersion = fmt.Sprintf("%v-rc%v", versionRoot, buildNumber)
   } else {
