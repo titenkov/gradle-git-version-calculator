@@ -1,6 +1,3 @@
-# Documentation: https://docs.brew.sh/Formula-Cookbook
-#                https://rubydoc.brew.sh/Formula
-# PLEASE REMOVE ALL GENERATED COMMENTS BEFORE SUBMITTING YOUR PULL REQUEST!
 class Ggvc < Formula
   desc "Script for generating semantic version based on the version in gradle.properties and git branch"
   homepage "https://github.com/titenkov/gradle-git-version-calculator"

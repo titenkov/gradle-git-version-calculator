@@ -7,7 +7,7 @@ import (
 var tests = []struct {
     name string;       branch string;                   version string;                         expected string
 } {
-	{ "",                "develop",                       "1.0.0-SNAPSHOT",                       "1.0.0-SNAPSHOT"                    },
+  { "",                "develop",                       "1.0.0-SNAPSHOT",                       "1.0.0-SNAPSHOT"                    },
   { "",                "feature/FX-12345",              "1.0.0-SNAPSHOT",                       "1.0.0-feature-fx-12345-SNAPSHOT"   },
   { "",                "defect/FX-12345",               "1.0.0-SNAPSHOT",                       "1.0.0-defect-fx-12345-SNAPSHOT"    },
   { "",                "release/1.0.0",                 "1.0.0",                                "1.0.0-rc0"                         },
