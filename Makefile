@@ -4,12 +4,8 @@ clean:
 build: clean test
 	go build ggvc.go
 
-test:
+test: clean
 	go test .
 
 release:
 	goreleaser
-
-package: build
-	tar --exclude='./.git' --exclude='./Makefile' --exclude='./README.md' \
-			 -zcvf "gradle-git-version-calculator-0.0.1.tar.gz" .
