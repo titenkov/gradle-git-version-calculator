@@ -26,3 +26,16 @@ changelog:
     exclude:
     - '^docs:'
     - '^test:'
+brews:
+  -
+    name: ggvc
+    github:
+      owner: titenkov
+      name: homebrew-tap
+    folder: Formula
+    homepage: "https://github.com/titenkov/gradle-git-version-calculator"
+    description: "Generates semantic version based on the version in gradle.properties and git branch"
+    dependencies:
+      - git
+    install: |
+      bin.install "ggvc"
